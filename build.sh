@@ -72,14 +72,6 @@ then
         SCINSTAPATH=""
     fi
 
-    # Remove existing signatures from injected dylibs to avoid re-signing parser errors
-    for binary in $SCINSTAPATH $FLEXPATH; do
-        if [ -n "$binary" ] && [ -f "$binary" ]; then
-            codesign --remove-signature "$binary" 2>/dev/null || true
-            ldid -r "$binary" 2>/dev/null || true
-        fi
-    done
-
     # Create IPA File
     echo -e '\033[1m\033[32mCreating the IPA file...\033[0m'
     rm -f packages/SCInsta-sideloaded.ipa
